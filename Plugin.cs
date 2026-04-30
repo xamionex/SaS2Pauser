@@ -76,9 +76,9 @@ public class Plugin : BasePlugin
     private static void TryRegisterModOptions()
     {
         var order = 0;
-        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenu,        "SaS2Pauser", "Pause in Menu",       order += 1);
-        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInSettings,    "SaS2Pauser", "Pause in Settings",   order += 1);
-        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseWhenBrowsing,  "SaS2Pauser", "Pause when Browsing", order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenu,        "Pauser", "Pause in Menu",       order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInSettings,    "Pauser", "Pause in Settings",   order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseWhenBrowsing,  "Pauser", "Pause when Browsing", order += 1);
     }
     // ReSharper restore RedundantAssignment
 
