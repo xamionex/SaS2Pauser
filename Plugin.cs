@@ -31,11 +31,11 @@ public class Plugin : BasePlugin
     {
         Instance = this;
 
-        PauseInMenu = Config.Bind("General", "PauseInMenu", true, "Pause the game when the in-game menu is open.");
-        PauseInSettings = Config.Bind("General", "PauseInSettings", true, "When PauseInMenu is also true, keep the game paused when you open the settings screen from the in-game menu.");
-        PauseInAllMenus = Config.Bind("General", "PauseInAllMenus", false, "When any menu is open, pause.");
+        PauseInMenu = Config.Bind("General", "PauseInMenu", true, "Pauses the game when the in-game menu is open.");
+        PauseInSettings = Config.Bind("General", "PauseInSettings", true, "Pauses the game when you open the settings screen from the in-game menu.");
+        PauseInAllMenus = Config.Bind("General", "PauseInAllMenus", false, "Pauses the game when any menu is open.");
         PauseInMenuSubmenus = Config.Bind("General", "PauseInMenuSubmenus", false, "Pause in all sub-menus (Inventory, Skill Tree, Bestiary, etc.) after entering the game menu.");
-        UnpauseWhenEquipping = Config.Bind("General", "UnpauseWhenEquipping", false, "Temporarily unpause the game for the frame when you equip an item, allowing the equip animation to play. If turned off, we skip animation instead");
+        UnpauseWhenEquipping = Config.Bind("General", "UnpauseWhenEquipping", false, "Temporarily unpause the game for the frame when you equip an item, allowing the equip animation to play. If turned off, skip the animation instead");
         
         var modOptionsType = Type.GetType("SaS2ModOptions.SaS2ModOptions, amione.SaS2ModOptions");
         if (modOptionsType != null)
@@ -81,8 +81,8 @@ public class Plugin : BasePlugin
     {
         var order = 0;
         SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenu, "Pauser", "Pause in Menu", order += 1);
-        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenuSubmenus, "Pauser", "Pause in Sub-menus", order += 1);
         SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInSettings, "Pauser", "Pause in Settings", order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenuSubmenus, "Pauser", "Pause in Sub-menus", order += 1);
         SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInAllMenus, "Pauser", "Pause in all menus", order += 1);
         SaS2ModOptions.SaS2ModOptions.RegisterConfig(UnpauseWhenEquipping, "Pauser", "Unpause while equipping (Off=skip animation)", order += 1);
     }

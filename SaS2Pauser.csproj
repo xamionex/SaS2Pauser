@@ -4,8 +4,8 @@
         <TargetFramework>net452</TargetFramework>
         <AssemblyName>amione.SaS2Pauser</AssemblyName>
         <Product>SaS2Pauser</Product>
-        <ProductDescription>pt.rs BepInEx Plugin Template!</ProductDescription>
-        <Version>1.0.1</Version>
+        <ProductDescription>Adds options to make Salt and Sacrifice pause in different menus</ProductDescription>
+        <Version>1.0.2</Version>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <LangVersion>latest</LangVersion>
         <RestoreAdditionalProjectSources>
