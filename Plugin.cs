@@ -1,11 +1,11 @@
 using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Timers;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.NetLauncher.Common;
 using HarmonyLib;
-using System.Runtime.CompilerServices;
 
 namespace SaS2Pauser;
 
@@ -18,7 +18,9 @@ public class Plugin : BasePlugin
     internal static Plugin Instance;
     internal static ConfigEntry<bool> PauseInMenu;
     internal static ConfigEntry<bool> PauseInSettings;
-    internal static ConfigEntry<bool> PauseWhenBrowsing;
+    internal static ConfigEntry<bool> PauseInAllMenus;
+    internal static ConfigEntry<bool> PauseInMenuSubmenus;
+    internal static ConfigEntry<bool> UnpauseWhenEquipping;
 
     // Counter of active menus that should keep the game paused.
 
@@ -29,9 +31,11 @@ public class Plugin : BasePlugin
     {
         Instance = this;
 
-        PauseInMenu = Config.Bind("General", "PauseInMenu", true, "Pause the game when the in‑game menu is open.");
-        PauseInSettings = Config.Bind("General", "PauseInSettings", true, "When PauseInMenu is also true, keep the game paused when you open the settings screen from the in‑game menu.");
-        PauseWhenBrowsing = Config.Bind("General", "PauseWhenBrowsing", true, "When PauseInMenu is also true, keep the game paused when you open any other sub‑menu (equipment, inventory, etc.) from the in‑game menu.");
+        PauseInMenu = Config.Bind("General", "PauseInMenu", true, "Pause the game when the in-game menu is open.");
+        PauseInSettings = Config.Bind("General", "PauseInSettings", true, "When PauseInMenu is also true, keep the game paused when you open the settings screen from the in-game menu.");
+        PauseInAllMenus = Config.Bind("General", "PauseInAllMenus", false, "When any menu is open, pause.");
+        PauseInMenuSubmenus = Config.Bind("General", "PauseInMenuSubmenus", false, "Pause in all sub-menus (Inventory, Skill Tree, Bestiary, etc.) after entering the game menu.");
+        UnpauseWhenEquipping = Config.Bind("General", "UnpauseWhenEquipping", false, "Temporarily unpause the game for the frame when you equip an item, allowing the equip animation to play. If turned off, we skip animation instead");
         
         var modOptionsType = Type.GetType("SaS2ModOptions.SaS2ModOptions, amione.SaS2ModOptions");
         if (modOptionsType != null)
@@ -76,9 +80,11 @@ public class Plugin : BasePlugin
     private static void TryRegisterModOptions()
     {
         var order = 0;
-        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenu,        "Pauser", "Pause in Menu",       order += 1);
-        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInSettings,    "Pauser", "Pause in Settings",   order += 1);
-        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseWhenBrowsing,  "Pauser", "Pause when Browsing", order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenu, "Pauser", "Pause in Menu", order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInMenuSubmenus, "Pauser", "Pause in Sub-menus", order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInSettings, "Pauser", "Pause in Settings", order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(PauseInAllMenus, "Pauser", "Pause in all menus", order += 1);
+        SaS2ModOptions.SaS2ModOptions.RegisterConfig(UnpauseWhenEquipping, "Pauser", "Unpause while equipping (Off=skip animation)", order += 1);
     }
     // ReSharper restore RedundantAssignment
 
