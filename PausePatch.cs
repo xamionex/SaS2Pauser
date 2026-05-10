@@ -18,7 +18,6 @@ namespace SaS2Pauser;
 public static class PausePatch
 {
     private static readonly MethodInfo GetMainPlayerMethod = AccessTools.Method(typeof(PlayerMgr), "GetMainPlayer");
-    private static readonly MethodInfo GetPlayerMethod = AccessTools.Method(typeof(PlayerMgr), "GetPlayer", [typeof(int)]);
     private static readonly FieldInfo LevelListField = AccessTools.Field(typeof(PlayerMenu), "level");
     private static readonly FieldInfo PlayersField = AccessTools.Field(typeof(PlayerMgr), "player") ?? AccessTools.Field(typeof(PlayerMgr), "players");
     
@@ -49,26 +48,9 @@ public static class PausePatch
             }
         }
 
-        var uniquePlayers = new HashSet<Player>();
+        // Fallback if the player array field isn't found
         if (GetMainPlayerMethod?.Invoke(null, null) is Player main)
-            uniquePlayers.Add(main);
-        if (GetPlayerMethod != null)
-        {
-            for (var i = 0; i < 4; i++)
-            {
-                try
-                {
-                    if (GetPlayerMethod.Invoke(null, [i]) is Player p)
-                        uniquePlayers.Add(p);
-                }
-                catch
-                {
-                    // ignore invalid
-                }
-            }
-        }
-        foreach (var player in uniquePlayers)
-            yield return player;
+            yield return main;
     }
 
     private static bool IsAnySettingsLevelActive(List<LevelBase> levelList)
