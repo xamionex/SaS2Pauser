@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Timers;
 using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.NetLauncher.Common;
+using BepInEx.NET.Common;
 using HarmonyLib;
 
 namespace SaS2Pauser;
